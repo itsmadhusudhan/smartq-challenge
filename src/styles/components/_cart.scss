@@ -1,0 +1,36 @@
+.cart__card{
+  position: relative;
+}
+
+.cart__card--header{
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  background: $yellow;
+
+}
+
+.cart__item{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.cart__total{
+  font-size: 25px;
+  padding:10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart__checkout{
+  background: $yellow;
+  padding: 10px;  
+  border: 0;
+  box-shadow: 1px 2px 5px 0 rgba(0,0,0,0.2),-1px 2px 5px 0 rgba(0,0,0,0.15);
+  cursor: pointer;  
+  outline: none;
+  width: 90%;
+  margin-left:10px;
+}
