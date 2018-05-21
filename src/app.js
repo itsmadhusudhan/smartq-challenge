@@ -9,7 +9,7 @@ import { addItem } from "./redux/actions/cartActions";
 const store = configStore();
 
 store.subscribe(() => {
-  console.log(store.getState());
+  // console.log(store.getState());
 });
 
 // store.dispatch(addItem("chicken",2,25))

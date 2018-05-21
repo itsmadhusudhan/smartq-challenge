@@ -1,9 +1,10 @@
-const cartReducerDefaultState = [{name:"hello",count:0}];
+const cartReducerDefaultState = [];
 
 const cartReducer = (state = cartReducerDefaultState, action) => {
   switch (action.type) {
     case "ADD_ITEM":
-      return [...state,action.item];
+    console.log(action.item)
+      return [...action.item];
     case "DELETE_ITEMS":
       return cartReducerDefaultState;
     case "REMOVE_ITEM":

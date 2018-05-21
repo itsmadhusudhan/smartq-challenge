@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { addItem, removeItem, deleteItem } from "../redux/actions/cartActions";
+
 
 const FoodItem = props => {
   return (
@@ -19,16 +21,16 @@ const FoodItem = props => {
         <i
           className="fas fa-minus icon"
           onClick={() => {
-            props.decrement(props.food);
+            props.decrementItem(props.food);
           }}
         />
         {
-          // props.items.filter(item=>item.name===props.food.name).map(item=> item.count)
+          props.items.filter(item=>item.name===props.food.name).length!==0?props.items.filter(item=>item.name===props.food.name).map(item=> item.count):0
         }
         <i
           className="fas fa-plus icon"
           onClick={() => {
-            props.increment(props.food);
+            props.incrementItem(props.food);
           }}
         />
         <p className="food__item--price">{props.food.price}</p>

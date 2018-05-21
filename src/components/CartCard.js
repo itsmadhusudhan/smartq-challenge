@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import uuid from "uuid";
 import CartItem from "./CartItem";
 import { deleteItems } from "../redux/actions/cartActions";
 
@@ -16,11 +17,11 @@ const CartCard = props => {
       </div>
       <div className="cart__items">
         {props.items.map(item => {
-          return <CartItem item={item} />;
+          return <CartItem key={uuid()} item={item} />;
         })}
       </div>
       <p className="cart__total">
-        Total: <span>25</span>
+        Total: <span>{/*props.items.reduce((a,b)=>a.count+b.count)*/}</span>
       </p>
       <button className="cart__checkout">Checkout</button>
     </div>

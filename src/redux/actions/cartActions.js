@@ -2,13 +2,9 @@ export const deleteItems=()=>({
   type:"DELETE_ITEMS"
 })
 
-export const addItem=(name,count,price)=>({
+export const addItem=(item)=>({
   type:"ADD_ITEM",
-  item:{
-    name,
-    count,
-    price
-  }
+  item
 });
 
 export const removeItem=(name)=>({

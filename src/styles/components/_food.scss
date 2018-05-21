@@ -39,7 +39,7 @@
 .food__item{
   display: flex;
   align-items: flex-start;
-  border-bottom: 1px solid $black;
+  border-bottom: 1px solid $grey;
   padding: 10px;
 }
 
@@ -53,4 +53,10 @@
 .icon{
   cursor: pointer;
   margin: 0 10px;
+}
+
+.food__category--heading{
+  padding: 5px;
+  background: $yellow;
+  text-align: center;
 }

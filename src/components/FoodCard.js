@@ -1,71 +1,117 @@
 import React from "react";
 import { connect } from "react-redux";
-import uuid from "uuid";
-import FoodItem from "./FoodItem";
-import { addItem, removeItem,deleteItem } from "../redux/actions/cartActions";
+import { categorySelector } from "../redux/selectors/categorySelector";
+import FoodCategory from "./FoodCategory";
+import { addItem } from "../redux/actions/cartActions";
+
+//NOTE:Can be a functional component
 
 class FoodCard extends React.Component {
-  state = {
-    items: [...this.props.items]
-  };
-
-  componentWillReceiveProps(props){
-    this.setState(()=>({
-      items:[...this.props.items]
-    }))
+  constructor(props) {
+    super(props);
+    this.state = {
+      // items: [...this.props.items],
+      selectedItems: []
+    };
   }
 
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps !== prevState) {
+  //     return [...nextProps.items];
+  //   }
+  // }
+
   incrementItem = food => {
-    console.log(this.state.items);
-    this.props.items.length !== 0
-      ? this.props.items.map(item => {
-          console.log(item.name === food.name);
+    this.state.selectedItems.length !== 0
+      ? this.state.selectedItems.map(item => {
+          // console.log(item.name === food.name);
           item.name === food.name
-            ? this.props.dispatch(removeItem(food.name)) && this.props.dispatch(
-              addItem(food.name, item.count + 1, food.price)
-            )
-            : this.props.dispatch(removeItem(food.name)) && this.props.dispatch(addItem(food.name, 1, food.price));
+            ? this.setState(prevState => {
+                return {
+                  selectedItems: [
+                    ...prevState.selectedItems.filter(
+                      item => item.name !== food.name
+                    ),
+                    { ...food, count: item.count + 1 }
+                  ]
+                };
+              })
+            : this.setState(prevState => {
+                return {
+                  selectedItems: [
+                    ...prevState.selectedItems,
+                    { ...food, count: 1 }
+                  ]
+                };
+              });
         })
-      : "";
+      : this.setState(() => {
+          return {
+            selectedItems: [{ ...food, count: 1 }]
+          };
+        });
   };
 
   decrementItem = food => {
-    console.log("decrement");
-    this.props.items.length !== 0
-    ? this.props.items.map(item => {
-        console.log(item.name === food.name);
-        item.name === food.name
-          ?item.count>1? this.props.dispatch(removeItem(food.name)) && this.props.dispatch(
-            deleteItem(food.name, item.count - 1, food.price)
-          ):this.props.dispatch(removeItem(food.name))
-          : ""
-          ;
-      })
-    : "";
+    this.state.selectedItems.length !== 0
+      ? this.state.selectedItems.map(item => {
+          // console.log(item.name === food.name);
+          item.name === food.name
+            ? this.setState(prevState => {
+                return {
+                  selectedItems: [
+                    ...prevState.selectedItems.filter(
+                      item => item.name !== food.name
+                    ),
+                    { ...food, count: item.count - 1 }
+                  ]
+                };
+              })
+            : this.setState(prevState => {
+                return {
+                  selectedItems: [
+                    ...prevState.selectedItems,
+                    { ...food, count: 1 }
+                  ]
+                };
+              });
+        })
+      : ""
   };
+
+  componentDidUpdate(){
+    this.props.dispatch(addItem(this.state.selectedItems))
+  }
 
   render() {
     return (
       <div className="food__card" id="all">
-        {this.props.food.map(food => {
+        {[
+          ...new Set(
+            this.props.food.map(food => {
+              return food.category;
+            })
+          )
+        ].map(category => {
           return (
-            <FoodItem
-              key={uuid()}
-              food={food}
-              increment={this.incrementItem}
-              decrement={this.decrementItem}
+            <FoodCategory
+              key={category}
+              category={category}
+              incrementItem={(food)=>{
+                this.incrementItem(food);
+              }}
+              decrementItem={this.decrementItem}
             />
           );
         })}
-      </div>
+      </div>  
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    food: state.food,
-    items: state.items
+    food: state.food
   };
 };
 
