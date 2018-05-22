@@ -14,6 +14,13 @@ class FoodCard extends React.Component {
     };
   }
 
+  // static getDerivedStateFromProps=(prevProps,nextProps)=>{
+  //   if(prevProps!==nextProps){
+  //     return nextProps.isCleared
+  //   }
+  //   console.log(nextProps)
+  // }
+
   incrementItem = food => {
     this.state.selectedItems.find(item => item.name === food.name)
       ? this.setState(prevState => {
@@ -41,32 +48,7 @@ class FoodCard extends React.Component {
   };
 
   decrementItem = food => {
-    // this.state.selectedItems.length !== 0
-    //   ? this.state.selectedItems.map(item => {
-    //       // console.log(item.name === food.name);
-    //       item.name === food.name
-    //         ? this.setState(prevState => {
-    //             return {
-    //               selectedItems: [
-    //                 ...prevState.selectedItems.filter(
-    //                   item => item.name !== food.name
-    //                 ),
-    //                 { ...food, count: item.count - 1 }
-    //               ]
-    //             };
-    //           })
-    //         : this.setState(prevState => {
-    //             return {
-    //               selectedItems: [
-    //                 ...prevState.selectedItems,
-    //                 { ...food, count: 1 }
-    //               ]
-    //             };
-    //           });
-    //     })
-    //   : "";
-
-    const fooditem=this.state.selectedItems.find(item => item.name === food.name);
+     const fooditem=this.state.selectedItems.find(item => item.name === food.name);
 
       fooditem?fooditem.count!==1? this.setState(prevState => {
           return {

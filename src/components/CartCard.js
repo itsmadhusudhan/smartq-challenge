@@ -21,7 +21,7 @@ const CartCard = props => {
         })}
       </div>
       <p className="cart__total">
-        Total: <span>{/*props.items.reduce((a,b)=>a.count+b.count)*/}</span>
+        Total: <span>{props.items.length!==0?props.items.map(({count,price})=>price*count).reduce((a,b)=>a+b):0}</span>
       </p>
       <button className="cart__checkout">Checkout</button>
     </div>
