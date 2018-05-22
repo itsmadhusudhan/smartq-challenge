@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { addItem, removeItem, deleteItem } from "../redux/actions/cartActions";
 
-
 const FoodItem = props => {
   return (
     <div className="food__item">
@@ -24,13 +23,23 @@ const FoodItem = props => {
             props.decrementItem(props.food);
           }}
         />
-        {
-          props.items.filter(item=>item.name===props.food.name).length!==0?props.items.filter(item=>item.name===props.food.name).map(item=> item.count):0
-        }
+        {props.items.filter(item => item.name === props.food.name).length !== 0
+          ? props.items
+              .filter(item => item.name === props.food.name)
+              .map(item => item.count)
+          : 0}
         <i
           className="fas fa-plus icon"
           onClick={() => {
             props.incrementItem(props.food);
+            // props.incrementItem(  {
+            //   availabletime: "11:00-15:30",
+            //   category: "Chinese Combos",
+            //   description: "",
+            //   name: "Egg Chinese Combo",
+            //   price: 100,
+            //   vegflag: "nonveg"
+            // });
           }}
         />
         <p className="food__item--price">{props.food.price}</p>
