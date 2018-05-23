@@ -14,14 +14,17 @@ class FoodCard extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps=(prevProps,nextProps)=>{
-  //   if(prevProps!==nextProps){
-  //     return nextProps.isCleared
+  // static getDerivedStateFromProps = (prevProps, nextProps) => {
+  //   if (prevProps !== nextProps) {
+  //     return nextProps.isCleared;
   //   }
-  //   console.log(nextProps)
-  // }
+  // };
 
   incrementItem = food => {
+    const fooditem = this.state.selectedItems.find(
+      item => item.name === food.name
+    );
+    
     this.state.selectedItems.find(item => item.name === food.name)
       ? this.setState(prevState => {
           return {
@@ -33,9 +36,7 @@ class FoodCard extends React.Component {
                 ...prevState.selectedItems.find(
                   item => item.name === food.name
                 ),
-                count:
-                  prevState.selectedItems.find(item => item.name === food.name)
-                    .count + 1
+                count: fooditem.count + 1
               }
             ]
           };
@@ -48,38 +49,54 @@ class FoodCard extends React.Component {
   };
 
   decrementItem = food => {
-     const fooditem=this.state.selectedItems.find(item => item.name === food.name);
+    const fooditem = this.state.selectedItems.find(
+      item => item.name === food.name
+    );
 
-      fooditem?fooditem.count!==1? this.setState(prevState => {
-          return {
-            selectedItems: [
-              ...prevState.selectedItems.filter(
-                item => item.name !== food.name
-              ),
-              {
-                ...prevState.selectedItems.find(
-                  item => item.name === food.name
+    fooditem
+      ? fooditem.count !== 1
+        ? this.setState(prevState => {
+            return {
+              selectedItems: [
+                ...prevState.selectedItems.filter(
+                  item => item.name !== food.name
                 ),
-                count:
-                  prevState.selectedItems.find(item => item.name === food.name)
-                    .count -1
-              }
-            ]
-          };
-        }):this.setState(prevState => {
-          return {
-            selectedItems: [
-              ...prevState.selectedItems.filter(
-                item => item.name !== food.name
-              )              
-            ]
-          };
-        })
-      : ""
+                {
+                  ...prevState.selectedItems.find(
+                    item => item.name === food.name
+                  ),
+                  count: fooditem.count - 1
+                }
+              ]
+            };
+          })
+        : this.setState(prevState => {
+            return {
+              selectedItems: [
+                ...prevState.selectedItems.filter(
+                  item => item.name !== food.name
+                )
+              ]
+            };
+          })
+      : "";
   };
+
+  changeToDefault=()=>{
+    this.setState(()=>({
+      selectedItems:[]
+    }))
+    this.props.changeIsCleared()
+  }
 
   componentDidUpdate() {
     this.props.dispatch(addItem(this.state.selectedItems));
+    // console.log(this.props.isCleared)
+    this.props.isCleared?this.changeToDefault():""
+  }
+
+  shouldComponentUpdate() {
+    return true;
   }
 
   render() {

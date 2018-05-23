@@ -12,6 +12,7 @@ const CartCard = props => {
           className="fas fa-trash icon"
           onClick={() => {
             props.dispatch(deleteItems());
+            props.changeIsCleared();
           }}
         />
       </div>

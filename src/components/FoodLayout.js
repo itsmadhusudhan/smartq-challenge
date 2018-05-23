@@ -8,6 +8,10 @@ import CartCard from "./CartCard";
 
 class FoodLayout extends React.Component {
 
+  state={
+    isCleared:false
+  }
+
   componentDidMount(){
     this.props.dispatch(fetchFoodWithRedux())
   }
@@ -17,14 +21,20 @@ class FoodLayout extends React.Component {
     e.target.classList.add("active");
   }
 
+  changeIsCleared=()=>{
+    this.setState((prevState)=>({
+      isCleared:prevState.isCleared?false:true
+    }))
+  }
+
   render() {
     return (
       <React.Fragment>
         <Navbar />
         <div className="food__wrapper">
         <MenuList setActiveMenu={this.setActiveMenu} />
-        <FoodCard/>
-        <CartCard/>
+        <FoodCard isCleared={this.state.isCleared} changeIsCleared={this.changeIsCleared}/>
+        <CartCard changeIsCleared={this.changeIsCleared}/>
         </div>
       </React.Fragment>
     );
